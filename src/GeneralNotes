@@ -1,0 +1,1 @@
+For MSVC, have to look into the _isnan functionality since it appears C99 NAN macros were not supported until about MSVC++2015

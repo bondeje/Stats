@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "real_time.h": "c",
+        "utils.h": "c",
+        "random_gen.h": "c"
+    }
+}
