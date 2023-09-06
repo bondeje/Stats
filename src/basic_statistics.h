@@ -6,7 +6,7 @@ any function or variable that has "select_method" in it is used for quantile det
 For a summary of what is going on, see the wikipedia article below or the associated paper from Hyndman & Fan
 https://en.wikipedia.org/wiki/Quantile#Estimating_quantiles_from_a_sample
 */
-extern enum select_method {
+enum select_method {
     SM_INVERTED_CDF = 1,
     SM_AVERAGED_INVERTED_CDF,
     SM_CLOSEST_OBSERVATION,

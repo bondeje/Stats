@@ -1,4 +1,5 @@
 // need to rename random in stdlib.h which appears in some versions of gcc
+#include <stddef.h>
 #include <stdlib.h>
 //#include "random_utils.h"
 
@@ -32,7 +33,7 @@
 #define PRNG_MAX_INC ((uint64_t)RAND_MAX)
 #endif // GENERATOR
 
-// variadice selector for randrange
+// variadic selector for randrange
 #define GET_RANDRANGE_MACRO(f1, f2, f3, NAME,...) NAME
 #define randrange(...) GET_RANDRANGE_MACRO(__VA_ARGS__, randrange3, randrange2, randrange1, UNUSED)(__VA_ARGS__)
 
@@ -63,6 +64,15 @@ uint64_t randrange3(uint64_t start, uint64_t stop, uint64_t step);
 /*
 generate a random double in the range [0, 1)
 */
-double random_();
+double random();
+
+
+
+double uniform(double start, double end);
+
+void * random_select(void * parr, size_t narr, size_t size);
+int random_selectn(void * parr, size_t nselect, size_t narr, size_t size);
+//int random_selectu(uint64_t * selected, size_t nselect, uint64_t stop); // not yet implemented
+//int random_select_sorted(void ** selected, size_t nselect, void ** parr, size_t narr); // not yet implemented
 
 #endif // RANDOM_GEN_H

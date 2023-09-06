@@ -12,14 +12,40 @@ int compare_double(const double * a, const double * b) {
     return 0;
 }
 
-// unbuffered swap
 void swap(void * dest, void * src, size_t size)
 {
-	void * buf = STATS_MALLOC(size);
+	unsigned char buf = '\0';
+	unsigned char * cdest = (unsigned char *) dest;
+	unsigned char * csrc = (unsigned char *) src;
+	//void * buf = STATS_MALLOC(size);
+	for (size_t i = 0; i < size; i++) {
+		memcpy((void *) &buf, csrc, 1);
+		memcpy(csrc, cdest, 1);
+		memcpy(cdest, &buf, 1);
+		csrc++;
+		cdest++;
+	}
+	//STATS_FREE(buf);
+}
+
+// TODO: should go into random_gen.c, but my includes are a little fucked up
+void shuffle(void * arr, size_t narr, size_t size) {
+    unsigned char * carr = (unsigned char *) arr;
+    unsigned char * replace = carr + (narr - 1) * size; // point at the last element
+    size_t i = narr-1;
+    while (i) {
+        swap(replace, carr + size * randrange(i-1), size);
+        i--;
+        replace -= size;
+    }
+}
+
+// unbuffered swap
+void swapbuf(void * dest, void * src, size_t size, void * buf)
+{
 	memcpy(buf, src, size);
 	memcpy(src, dest, size);
 	memcpy(dest, buf, size);
-	STATS_FREE(buf);
 }
 
 // Lomuto partition scheme
@@ -64,7 +90,7 @@ void * quickselect(void * arr, size_t num, size_t k, size_t size, int (*compar)(
 		} else {
 			right = ind-1;
 		}
-		DEBUG_PRINT(("ind = %zu, left = %zu, right = %zu\n", ind, left, right));
+		//DEBUG_PRINT(("ind = %zu, left = %zu, right = %zu\n", ind, left, right));
 	}
 	
 	return (void *) (((unsigned char *) arr) + ind * size);

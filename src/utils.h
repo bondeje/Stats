@@ -33,9 +33,19 @@
 #define M_PI 3.14159265358979323846
 #define IS_NEG(X) (!((X) > 0) && ((X) != 0))
 
+#define stringify(x) stringify_(x)
+#define stringify_(x) #x
+
+#define print_array(arr, narr, specifier)   \
+printf("%s:\n", stringify(arr));            \
+for (size_t i = 0; i < narr; i++) {         \
+    printf(specifier " ", arr[i]);          \
+}                                           \
+printf("\n")
+
 enum stats_status {
     STATS_SUCCESS = 0,
-    STATS_FAILURE = -1
+    STATS_FAILURE = 1
 };
 
 typedef enum stats_status stats_status;
@@ -49,6 +59,8 @@ inline unsigned int kronecker_delta(unsigned int i, unsigned int j) {
 }
 
 void swap(void * dest, void * src, size_t size);
+void shuffle(void * arr, size_t narr, size_t size);
+void swapbuf(void * dest, void * src, size_t size, void * buf); // this is probably faster
 
 // Lomuto partition scheme
 size_t quick_partition_lomuto_(void * arr, size_t left, size_t right, size_t pivot_index, size_t size, int (*compar)(const void *, const void *));
